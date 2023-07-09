@@ -1,7 +1,7 @@
 <html>
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> 
-    circle {fill: rgb(238, 250, 9); stroke: black;} 
+    circle {stroke: black;} 
 </style>
 <body onload='init()'>
 
@@ -10,14 +10,23 @@
 <script>
     const lowThreshold = 50;
     const mediumThreshold = 80;
+    const lowTag = "Low";
+    const mediumTag = "Medium";
+    const highTag = "High";
+
+    const tagColor = {
+        "Low": "red",
+        "Medium": "orange",
+        "High": "green"
+    }
 
     function qualityTag(score) {
         if (score <= lowThreshold) {
-            return "Low";
+            return lowTag;
         } else if (score > lowThreshold && score <= mediumThreshold) {
-            return "Medium";  
+            return mediumTag;  
         } else {
-            return "High";
+            return highTag;
         }
     }
 
@@ -45,7 +54,7 @@
                     .domain([30,100])
                     .range([height,0]);
 
-            // Add line plot
+            // Add the plot
             svg
                 .append("g")
                 .attr("transform", "translate("+translateX+","+translateY+")")
@@ -55,7 +64,12 @@
                 .append("circle")
                 .attr("cx", function(d) { return x(parseDate(d.Date)); }  )
                 .attr("cy", function(d) { return y(d.TotalQualityScore); } )
-                .attr("r", 4);
+                .attr("r", 4)
+                .style("fill", 
+                    function(d) {
+                        return tagColor[qualityTag(d.TotalQualityScore)];
+                    }
+                );
 
             // Add y-axis
             svg
