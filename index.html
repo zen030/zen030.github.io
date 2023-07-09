@@ -8,15 +8,28 @@
 <svg width=500 height=500></svg>
 
 <script>
+    const lowThreshold = 50;
+    const mediumThreshold = 80;
+
+    function qualityTag(score) {
+        if (score <= lowThreshold) {
+            return "Low";
+        } else if (score > lowThreshold && score <= mediumThreshold) {
+            return "Medium";  
+        } else {
+            return "High";
+        }
+    }
+
     function qualityOverview () {
         d3.csv("overview_quality.csv")
         .then(function(data) {
 
             var svg = d3.select("svg");
-            width = 400;
-            height = 400;
             translateX = 50;
             translateY = 50;
+            width = svg.attr("width") - (2 * translateX);
+            height = svg.attr("height") - (2 * translateY);
 
             console.log(data[0].Date);
 
@@ -25,11 +38,11 @@
 
             console.log(parseDate(data[0].Date));
 
-            var x = d3.scaleTime()
+            const x = d3.scaleTime()
                     .domain(d3.extent(data, (date) => parseDate(date.Date)))
                     .range([0,width]);
-            var y = d3.scaleLinear()
-                    .domain([0,100])
+            const y = d3.scaleLinear()
+                    .domain([30,100])
                     .range([height,0]);
 
             // Add line plot
@@ -56,6 +69,29 @@
                 .attr("transform", "translate("+translateX+","+(height+translateY)+")")
                 .call(d3.axisBottom(x));
 
+            // Add low threshold
+            var path = d3.path();
+            path.moveTo(0, y(lowThreshold));
+            path.lineTo(width, y(lowThreshold));
+
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .append("path")
+                .attr("d", path)
+                .attr("stroke", "red");
+
+            // Add medium threshold
+            path = d3.path();
+            path.moveTo(0, y(mediumThreshold));
+            path.lineTo(width, y(mediumThreshold));
+
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .append("path")
+                .attr("d", path)
+                .attr("stroke", "orange");
         })
         .catch(function(error){
             // handle error
