@@ -1,1 +1,72 @@
-Hello World again!
+<html>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> 
+    circle {fill: rgb(238, 250, 9); stroke: black;} 
+</style>
+<body onload='init()'>
+
+<svg width=500 height=500></svg>
+
+<script>
+    function qualityOverview () {
+        d3.csv("overview_quality.csv")
+        .then(function(data) {
+
+            var svg = d3.select("svg");
+            width = 400;
+            height = 400;
+            translateX = 50;
+            translateY = 50;
+
+            console.log(data[0].Date);
+
+            // x value
+            const parseDate = d3.timeParse("%d-%b-%y");
+
+            console.log(parseDate(data[0].Date));
+
+            var x = d3.scaleTime()
+                    .domain(d3.extent(data, (date) => parseDate(date.Date)))
+                    .range([0,width]);
+            var y = d3.scaleLinear()
+                    .domain([0,100])
+                    .range([height,0]);
+
+            // Add line plot
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("cx", function(d) { return x(parseDate(d.Date)); }  )
+                .attr("cy", function(d) { return y(d.TotalQualityScore); } )
+                .attr("r", 4);
+
+            // Add y-axis
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .call(d3.axisLeft(y));
+
+            // Add x-axis
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+(height+translateY)+")")
+                .call(d3.axisBottom(x));
+
+        })
+        .catch(function(error){
+            // handle error
+        })
+    }
+
+    async function init() {
+        qualityOverview();
+    }
+</script>
+
+</body>
+</html>
+
