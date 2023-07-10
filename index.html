@@ -83,7 +83,7 @@
                 .append("circle")
                 .attr("cx", function(d) { return x(parseDate(d.Date)); }  )
                 .attr("cy", function(d) { return y(d.TotalQualityScore); } )
-                .attr("r", 4)
+                .attr("r", 8)
                 .style("fill", 
                     function(d) {
                         return tagColor[qualityTag(d.TotalQualityScore)];
@@ -101,6 +101,23 @@
                 .append("g")
                 .attr("transform", "translate("+translateX+","+(height+translateY)+")")
                 .call(d3.axisBottom(x));
+
+            // Add X axis label
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .append("text")
+                .attr("text-anchor", "end")
+                .attr("x", (width / 2) + 80)
+                .attr("y", height + 40)
+                .text("Quality Evaluation Date");
+            // Y axis label
+            svg.append("text")
+                .attr("text-anchor", "end")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 20)
+                .attr("x", -height/2)
+                .text("Quality Score")
 
             // Add low threshold
             var path = d3.path();
