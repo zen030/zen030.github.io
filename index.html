@@ -4,13 +4,43 @@
 
 <style> 
     circle {stroke: black;} 
+    .svg,
+    .text {
+        vertical-align: top;
+        display: inline-block;
+    }
+    .column {
+        float: left;
+        width: 50%;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 </style>
 <body onload='init()'>
-<p>
-    <a href="https://github.com/zen030/zen030.github.io/blob/main/index.html">Source Code</a>
-</p>
 
-<svg width=700 height=700 style="display: block; margin: auto"></svg>
+    <div class="row">
+    <div class="column">
+    <p><svg id="overview_chart" width=700 height=700></svg>
+        <br>
+        <svg id="overview_legend" width=400 height=100></svg></p>
+    </div>
+    <div class="column">
+    <h2>Column 2</h2>
+    <p>
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+        when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+        It has survived not only five centuries, but also the leap into electronic typesetting, 
+        remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset 
+        sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like 
+        Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>
+</div>
+
 
 <script>
     const lowThreshold = 50;
@@ -39,7 +69,7 @@
         d3.csv("overview_quality.csv")
         .then(function(data) {
 
-            var svg = d3.select("svg");
+            var svg = d3.select("#overview_chart");
             translateX = 50;
             translateY = 50;
             width = svg.attr("width") - (2 * translateX);
@@ -115,7 +145,7 @@
             svg.append("text")
                 .attr("text-anchor", "end")
                 .attr("transform", "rotate(-90)")
-                .attr("y", 20)
+                .attr("y", 15)
                 .attr("x", -height/2)
                 .text("Quality Score")
 
@@ -215,9 +245,20 @@
                 .attr("x", (width / 2) + 40)             
                 .attr("y", 20)
                 .attr("text-anchor", "middle")  
-                .style("font-size", "16px") 
+                .style("font-size", "20px") 
                 .style("text-decoration", "underline")  
                 .text("Wellbore Data Quality Score Overview");
+
+            // Add legend
+            var svg = d3.select("#overview_legend");
+
+            svg.append("text").attr("x",5).attr("y",20).text("Legend: ").style("font-size", "18px").style("text-decoration", "underline");
+            svg.append("circle").attr("cx",10).attr("cy",40).attr("r", 6).style("fill", "green");
+            svg.append("circle").attr("cx",10).attr("cy",60).attr("r", 6).style("fill", "orange");
+            svg.append("circle").attr("cx",10).attr("cy",80).attr("r", 6).style("fill", "red");
+            svg.append("text").attr("x",20).attr("y",40).text("High Quality Data").style("font-size", "15px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",20).attr("y",60).text("Medium Quality Data").style("font-size", "15px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",20).attr("y",80).text("Low Quality Data").style("font-size", "15px").attr("alignment-baseline","middle");
         })
         .catch(function(error){
             // handle error
