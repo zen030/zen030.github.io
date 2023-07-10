@@ -10,7 +10,7 @@
     <a href="https://github.com/zen030/zen030.github.io/blob/main/index.html">Source Code</a>
 </p>
 
-<svg width=500 height=500></svg>
+<svg width=700 height=700 style="display: block; margin: auto"></svg>
 
 <script>
     const lowThreshold = 50;
@@ -110,7 +110,7 @@
                 .attr("text-anchor", "end")
                 .attr("x", (width / 2) + 80)
                 .attr("y", height + 40)
-                .text("Quality Evaluation Date");
+                .text("Evaluation Date");
             // Y axis label
             svg.append("text")
                 .attr("text-anchor", "end")
@@ -209,6 +209,15 @@
                 .append("g")
                 .attr("transform", "translate("+translateX+","+translateY+")")
                 .call(makeAnnotations);
+
+            // Add chart title
+            svg.append("text")
+                .attr("x", (width / 2) + 40)             
+                .attr("y", 20)
+                .attr("text-anchor", "middle")  
+                .style("font-size", "16px") 
+                .style("text-decoration", "underline")  
+                .text("Wellbore Data Quality Score Overview");
         })
         .catch(function(error){
             // handle error
