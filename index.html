@@ -1,5 +1,7 @@
 <html>
 <script src='https://d3js.org/d3.v5.min.js'></script>
+<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+
 <style> 
     circle {stroke: black;} 
 </style>
@@ -54,7 +56,21 @@
                     .domain([30,100])
                     .range([height,0]);
 
-            // Add the plot
+            // Add the lines
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .append("path")
+                .datum(data)
+                .attr("fill", "none")
+                .attr("stroke", "black")
+                .attr("stroke-width", 1.5)
+                .attr("d", d3.line()
+                    .x(function(d) { return x(parseDate(d.Date)); })
+                    .y(function(d) { return y(d.TotalQualityScore); })
+                );
+
+            // Add the scatter-points
             svg
                 .append("g")
                 .attr("transform", "translate("+translateX+","+translateY+")")
@@ -106,6 +122,73 @@
                 .append("path")
                 .attr("d", path)
                 .attr("stroke", "orange");
+
+            // Add low quality threshold annotation
+            var annotations = [
+                {
+                    note: {
+                        label: "Low Quality Threshold Line",
+                        align: "middle",
+                        wrap: 100,
+                        padding: 5
+                    },
+                    connector: {
+                        end: "arrow",
+                        type: "line"
+                    },    
+                    type: d3.annotationCalloutCircle,
+                    subject: {
+                        radius: 10, 
+                        radiusPadding: 0
+                    },
+                    x: width-20,
+                    y: y(lowThreshold),
+                    dx: -10,
+                    dy: 40,
+                    color: ["red"]
+                }
+            ];
+
+            var makeAnnotations = d3.annotation().annotations(annotations);
+
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .call(makeAnnotations);
+
+
+            // Add medium quality threshold annotation
+            annotations = [
+                {
+                    note: {
+                        label: "Medium Quality Threshold Line",
+                        align: "middle",
+                        wrap: 100,
+                        padding: 5
+                    },
+                    connector: {
+                        end: "arrow",
+                        type: "line"
+                    },
+                    type: d3.annotationCalloutCircle,
+                    subject: {
+                        radius: 10, 
+                        radiusPadding: 0
+                    },
+                    x: width-20,
+                    y: y(mediumThreshold),
+                    dx: -10,
+                    dy: 40,
+                    color: ["orange"]
+                }
+            ];
+
+            makeAnnotations = d3.annotation().annotations(annotations);
+
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .call(makeAnnotations);
         })
         .catch(function(error){
             // handle error
