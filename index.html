@@ -3,18 +3,65 @@
 <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 
 <style> 
-    circle {stroke: black;} 
+    circle {
+        stroke: black;
+    } 
+
     .tooltip {
         position: fixed;
         display: inline-block;
         border-color: black transparent transparent transparent;
     }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #867f7f;
+        width: 100%;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a.active {
+        background-color: #04AA6D;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #111;
+    }
 </style>
 <body onload="init()">
+<ul>
+    <li>
+        <a id="OverviewMenu" href="#" onclick="clearChart();qualityOverview();return false;">Level-1: Overview</a>
+    </li>
+    <li>
+        <a id="WellboresMenu" href="#" onclick="if(isWellbores) {clearChart();qualityWeekly(currentDate);} else {return false;}">Level-2: Wellbores</a>
+    </li>
+    <li>
+        <a id="DimensionMenu" href="#">Level-3: Dimensions</a>
+    </li>
+    <li>
+        <a id="RulesetMenu" href="#">Level-4: Ruleset</a>
+    </li>
+</ul>
+
 <div id="tooltip_div"></div>    
 <p>
-    <svg id="the_chart_svg" width="700" height="600" style="display: block;margin: auto"></svg>
-    <svg id="the_legend_svg" width="700" height="100" style="display: block;margin: auto"></svg>
+    <svg id="the_chart_svg" width="1000" height="600" style="display: block;margin: auto"></svg>
+    <svg id="the_legend_svg" width="1000" height="100" style="display: block;margin: auto"></svg>
 </p>
 <p id="the_text"> 
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id cursus metus aliquam eleifend mi in. Id cursus metus aliquam eleifend. Sagittis eu volutpat odio facilisis mauris sit amet. Facilisi cras fermentum odio eu feugiat pretium nibh ipsum. Tellus rutrum tellus pellentesque eu tincidunt tortor. Turpis egestas maecenas pharetra convallis posuere morbi leo urna. Fusce id velit ut tortor pretium viverra suspendisse potenti nullam. Sed elementum tempus egestas sed sed risus pretium. Vitae ultricies leo integer malesuada nunc vel risus. Tristique senectus et netus et. Purus gravida quis blandit turpis cursus in. Nullam non nisi est sit amet facilisis magna etiam. Mauris in aliquam sem fringilla ut morbi tincidunt. Nam aliquam sem et tortor consequat id porta.
@@ -38,6 +85,14 @@
     Donec adipiscing tristique risus nec feugiat in fermentum posuere. Ut etiam sit amet nisl purus. At tellus at urna condimentum mattis pellentesque id. Tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Vitae congue eu consequat ac. Lacus sed turpis tincidunt id aliquet risus feugiat. Praesent elementum facilisis leo vel fringilla est ullamcorper. Ac placerat vestibulum lectus mauris. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. Ultricies lacus sed turpis tincidunt id aliquet risus. Et netus et malesuada fames ac. Sem et tortor consequat id porta nibh venenatis cras.    
 </p>
 <script>
+    var currentDate = "";
+    var currentWellbore = "";
+
+    var isOverview = true;
+    var isWellbores = false;
+    var isDimensions = false;
+    var isDimensions = false;
+
     const lowThreshold = 50;
     const mediumThreshold = 80;
     const lowTag = "Low";
@@ -63,6 +118,17 @@
     function qualityOverview () {
         d3.csv("overview_quality.csv")
         .then(function(data) {
+
+            isOverview = true;
+            isWellbores = false;
+            isDimensions = false;
+            isDimensions = false;
+
+            d3.select("#OverviewMenu").attr("class", "active");
+            d3.select("#WellboresMenu").attr("class", "");
+            d3.select("#DimensionMenu").attr("class", "");
+            
+
             var svg = d3.select("#the_chart_svg");
             translateX = 50;
             translateY = 50;
@@ -137,6 +203,12 @@
                 .on("click", function(d) {
                     clearChart();
                     qualityWeekly(d.Date);
+                    currentDate = d.Date;
+
+                    isOverview = true;
+                    isWellbores = true;
+                    isDimensions = false;
+                    isDimensions = false;
                 });
 
             // Add y-axis
@@ -287,6 +359,10 @@
     function qualityWeekly (Date) {
         d3.csv("wellbore_quality.csv")
         .then(function(data) {
+            d3.select("#OverviewMenu").attr("class", "active");
+            d3.select("#WellboresMenu").attr("class", "active");
+            d3.select("#DimensionMenu").attr("class", "");
+
             data = data.filter(function (el) {
                 return (el.Date == Date);
             });
@@ -312,7 +388,7 @@
                     .domain([30,100])
                     .range([height,0]);
 
-            // Add the scatter-points   
+            // Add the barchart   
             const bar_width = 100;
             svg
                 .append("g")
@@ -326,10 +402,20 @@
                         return tagColor[qualityTag(d.TotalQualityScore)];
                     }
                 )
-                .attr("x", function(d,i) {return x(d.Wellbore) + 100;})
+                .attr("x", function(d,i) {return x(d.Wellbore) + (bar_width/2);})
                 .attr("y", function(d,i) {return y(d.TotalQualityScore);})
                 .attr("width", bar_width)
-                .attr("height", function(d,i) {return height-y(d.TotalQualityScore);});
+                .attr("height", function(d,i) {return height-y(d.TotalQualityScore);})
+                .style('cursor', 'pointer')
+                .on("click", function(d) {
+                    clearChart();
+                    qualityWellbore(d.Wellbore, d.Date);
+
+                    isOverview = true;
+                    isWellbores = true;
+                    isDimensions = true;
+                    isDimensions = false;
+                });
 
             // Add y-axis
             svg
@@ -476,9 +562,17 @@
         })
     }    
 
-    function qualityWellbore () {
-        d3.csv("overview_quality.csv")
+    function qualityWellbore (Wellbore, Date) {
+        d3.csv("wellbore_quality.csv")
         .then(function(data) {
+            d3.select("#OverviewMenu").attr("class", "active");
+            d3.select("#WellboresMenu").attr("class", "active");
+            d3.select("#DimensionMenu").attr("class", "active");
+
+            data = data.filter(function (el) {
+                return (el.Wellbore == Wellbore && el.Date == Date);
+            });
+
             var svg = d3.select("#the_chart_svg");
             translateX = 50;
             translateY = 50;
@@ -488,71 +582,47 @@
             // x value
             const parseDate = d3.timeParse("%d-%b-%y");
 
-            const x = d3.scaleTime()
-                    .domain(d3.extent(data, (date) => parseDate(date.Date)))
+            console.log(data);
+            var dimensions = [];
+            dimensions.push({
+                "dimension": "Validity",
+                "score": data[0].ValidityScore
+            });
+            dimensions.push({
+                "dimension": "Completeness",
+                "score": data[0].CompletenessScore
+            });
+            dimensions.push({
+                "dimension": "Consistency",
+                "score": data[0].ConsistencyScore
+            });
+
+            const x = d3.scaleBand()
+                    .domain(["Validity", "Completeness", "Consistency"])
                     .range([0,width]);
             const y = d3.scaleLinear()
-                    .domain([30,100])
+                    .domain([0,100])
                     .range([height,0]);
 
-            // Add the lines
-            var div = d3.select("#tooltip_div")
-                .attr('class', 'tooltip')
-                .style('opacity', 0);
-
+            // Add the barchart   
+            const bar_width = 100;
             svg
                 .append("g")
                 .attr("transform", "translate("+translateX+","+translateY+")")
-                .append("path")
-                .datum(data)
-                .attr("fill", "none")
-                .attr("stroke", "black")
-                .attr("stroke-width", 1.5)
-                .attr("d", d3.line()
-                    .x(function(d) { return x(parseDate(d.Date)); })
-                    .y(function(d) { return y(d.TotalQualityScore); })
-                );
-
-            // Add the scatter-points
-            svg
-                .append("g")
-                .attr("transform", "translate("+translateX+","+translateY+")")
-                .selectAll("circle")
-                .data(data)
+                .selectAll("rect")
+                .data(dimensions)
                 .enter()
-                .append("circle")
-                .attr("cx", function(d) { return x(parseDate(d.Date)); }  )
-                .attr("cy", function(d) { return y(d.TotalQualityScore); } )
-                .attr("r", 8)
+                .append("rect")
                 .style("fill", 
                     function(d) {
-                        return tagColor[qualityTag(d.TotalQualityScore)];
+                        return tagColor[qualityTag(d.score)];
                     }
                 )
-                .style('cursor', 'pointer')
-                .on('mouseover', 
-                    function(d) {
-                        div
-                            .transition()
-                            .duration(200)
-                            .style('opacity', 0.9);
-                        div
-                            .html("<b>Date: " + d.Date + "<br/> Score: " + d.TotalQualityScore + "</b>")
-                            .style("left", (d3.event.pageX-15) + "px")
-                            .style("top", (d3.event.pageY-55) + "px");
-                    }
-                )
-                .on('mouseout', 
-                    () => {
-                        div
-                            .transition()
-                            .duration(500)
-                            .style('opacity', 0);
-                    }
-                )
-                .on("click", function(d) {
-                    clearChart();
-                });
+                .attr("x", function(d,i) {return x(d.dimension) + (bar_width/2);})
+                .attr("y", function(d,i) {return y(d.score);})
+                .attr("width", bar_width)
+                .attr("height", function(d,i) {return height-y(d.score);})
+                .style('cursor', 'pointer');
 
             // Add y-axis
             svg
@@ -681,7 +751,7 @@
                 .attr("text-anchor", "middle")  
                 .style("font-size", "20px") 
                 .style("text-decoration", "underline")  
-                .text("Wellbore Data-Quality Score by Dimension");
+                .text("Wellbore Data-Quality Score Weekly");
 
             // Add legend
             var svg = d3.select("#the_legend_svg");
