@@ -14,54 +14,83 @@
     }
 
     ul {
-        list-style-type: none;
         margin: 0;
         padding: 0;
-        overflow: hidden;
-        background-color: #867f7f;
-        width: 100%;
+        list-style-type: none;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+
+    li+li {
+        padding: 1em 2em 1em 3em;
     }
 
     li {
-        float: left;
+        padding: 1em 2em;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
     }
 
-    li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
+    li.active,
+    li.active+li:before {
+        background: lightgreen;
     }
 
-    li a.active {
-        background-color: #04AA6D;
+    li:hover:before,
+    li.active:before {
+        background: white;
     }
 
-    li a:hover:not(.active) {
-        background-color: #111;
+    li:last-child:after,
+    li+li:before {
+        content: '';
+        position: absolute;
+        top: -0.1em;
+        bottom: 0;
+        border-right: solid;
+        border-top: solid;
+        pointer-events: none;
+        box-sizing: border-box;
+        box-shadow: 3px -3px 6px -3px gray;
+        width: 3em;
+        transform: rotate(30deg) skewy(30deg);
+        z-index: 1;
+    }
+
+    li:last-child:after {
+        right: -1.5em;
+        background: inherit;
+    }
+
+    li+li:before {
+        left: -2em;
+    }
+
+    a {
+        cursor: pointer;
     }
 </style>
 <body onload="init()">
+<br>
+<div align="center">
 <ul>
-    <li>
-        <a id="OverviewMenu" href="#" onclick="clearChart();qualityOverview();return false;">Level-1: Overview</a>
+    <li id="OverviewMenu" >
+        <a onclick="clearChart();qualityOverview();return false;">Overview</a>
     </li>
-    <li>
-        <a id="WellboresMenu" href="#" onclick="if(isWellbores) {clearChart();qualityWeekly(currentDate);} else {return false;}">Level-2: Wellbores</a>
+    <li id="WellboresMenu">
+        <a onclick="if(isWellbores) {clearChart();qualityWeekly(currentDate);} else {return false;}">Wellbores</a>
     </li>
-    <li>
-        <a id="DimensionMenu" href="#">Level-3: Dimensions</a>
-    </li>
-    <li>
-        <a id="RulesetMenu" href="#">Level-4: Ruleset</a>
+    <li id="DimensionMenu">
+        <a>Dimensions</a>
     </li>
 </ul>
+</div>
 
 <div id="tooltip_div"></div>    
 <p>
-    <svg id="the_chart_svg" width="1000" height="600" style="display: block;margin: auto"></svg>
-    <svg id="the_legend_svg" width="1000" height="100" style="display: block;margin: auto"></svg>
+    <svg id="the_chart_svg" width="800" height="500" style="display: block;margin: auto"></svg>
+    <svg id="the_legend_svg" width="800" height="100" style="display: block;margin: auto"></svg>
 </p>
 <p id="the_text"> 
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id cursus metus aliquam eleifend mi in. Id cursus metus aliquam eleifend. Sagittis eu volutpat odio facilisis mauris sit amet. Facilisi cras fermentum odio eu feugiat pretium nibh ipsum. Tellus rutrum tellus pellentesque eu tincidunt tortor. Turpis egestas maecenas pharetra convallis posuere morbi leo urna. Fusce id velit ut tortor pretium viverra suspendisse potenti nullam. Sed elementum tempus egestas sed sed risus pretium. Vitae ultricies leo integer malesuada nunc vel risus. Tristique senectus et netus et. Purus gravida quis blandit turpis cursus in. Nullam non nisi est sit amet facilisis magna etiam. Mauris in aliquam sem fringilla ut morbi tincidunt. Nam aliquam sem et tortor consequat id porta.
