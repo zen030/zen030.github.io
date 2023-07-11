@@ -69,12 +69,8 @@
             width = svg.attr("width") - (2 * translateX);
             height = svg.attr("height") - (2 * translateY);
 
-            console.log(data[0].Date);
-
             // x value
             const parseDate = d3.timeParse("%d-%b-%y");
-
-            console.log(parseDate(data[0].Date));
 
             const x = d3.scaleTime()
                     .domain(d3.extent(data, (date) => parseDate(date.Date)))
@@ -140,7 +136,7 @@
                 )
                 .on("click", function(d) {
                     clearChart();
-                    qualityWeekly();
+                    qualityWeekly(d.Date);
                 });
 
             // Add y-axis
@@ -288,88 +284,52 @@
         })
     }
 
-    function qualityWeekly () {
-        d3.csv("overview_quality.csv")
+    function qualityWeekly (Date) {
+        d3.csv("wellbore_quality.csv")
         .then(function(data) {
+            data = data.filter(function (el) {
+                return (el.Date == Date);
+            });
+
             var svg = d3.select("#the_chart_svg");
             translateX = 50;
             translateY = 50;
             width = svg.attr("width") - (2 * translateX);
             height = svg.attr("height") - (2 * translateY);
 
-            console.log(data[0].Date);
-
             // x value
             const parseDate = d3.timeParse("%d-%b-%y");
 
-            console.log(parseDate(data[0].Date));
+            var wellbores = [];
+            for(var i=0; i<data.length; i++){
+                wellbores.push(data[i].Wellbore);
+            }
 
-            const x = d3.scaleTime()
-                    .domain(d3.extent(data, (date) => parseDate(date.Date)))
+            const x = d3.scaleBand()
+                    .domain(wellbores)
                     .range([0,width]);
             const y = d3.scaleLinear()
                     .domain([30,100])
                     .range([height,0]);
 
-            // Add the lines
-            var div = d3.select("#tooltip_div")
-                .attr('class', 'tooltip')
-                .style('opacity', 0);
-
+            // Add the scatter-points   
+            const bar_width = 100;
             svg
                 .append("g")
                 .attr("transform", "translate("+translateX+","+translateY+")")
-                .append("path")
-                .datum(data)
-                .attr("fill", "none")
-                .attr("stroke", "black")
-                .attr("stroke-width", 1.5)
-                .attr("d", d3.line()
-                    .x(function(d) { return x(parseDate(d.Date)); })
-                    .y(function(d) { return y(d.TotalQualityScore); })
-                );
-
-            // Add the scatter-points
-            svg
-                .append("g")
-                .attr("transform", "translate("+translateX+","+translateY+")")
-                .selectAll("circle")
+                .selectAll("rect")
                 .data(data)
                 .enter()
-                .append("circle")
-                .attr("cx", function(d) { return x(parseDate(d.Date)); }  )
-                .attr("cy", function(d) { return y(d.TotalQualityScore); } )
-                .attr("r", 8)
+                .append("rect")
                 .style("fill", 
                     function(d) {
                         return tagColor[qualityTag(d.TotalQualityScore)];
                     }
                 )
-                .style('cursor', 'pointer')
-                .on('mouseover', 
-                    function(d) {
-                        div
-                            .transition()
-                            .duration(200)
-                            .style('opacity', 0.9);
-                        div
-                            .html("<b>Date: " + d.Date + "<br/> Score: " + d.TotalQualityScore + "</b>")
-                            .style("left", (d3.event.pageX-15) + "px")
-                            .style("top", (d3.event.pageY-55) + "px");
-                    }
-                )
-                .on('mouseout', 
-                    () => {
-                        div
-                            .transition()
-                            .duration(500)
-                            .style('opacity', 0);
-                    }
-                )
-                .on("click", function(d) {
-                    clearChart();
-                    qualityWellbore();
-                });
+                .attr("x", function(d,i) {return x(d.Wellbore) + 100;})
+                .attr("y", function(d,i) {return y(d.TotalQualityScore);})
+                .attr("width", bar_width)
+                .attr("height", function(d,i) {return height-y(d.TotalQualityScore);});
 
             // Add y-axis
             svg
@@ -525,12 +485,8 @@
             width = svg.attr("width") - (2 * translateX);
             height = svg.attr("height") - (2 * translateY);
 
-            console.log(data[0].Date);
-
             // x value
             const parseDate = d3.timeParse("%d-%b-%y");
-
-            console.log(parseDate(data[0].Date));
 
             const x = d3.scaleTime()
                     .domain(d3.extent(data, (date) => parseDate(date.Date)))
