@@ -213,11 +213,11 @@
                     function(d) {
                         div
                             .transition()
-                            .duration(200)
+                            .duration(10)
                             .style('opacity', 0.9);
                         div
-                            .html("<b>Date: " + d.Date + "<br/> Score: " + d.TotalQualityScore + "</b>")
-                            .style("left", (d3.event.pageX-15) + "px")
+                            .html("Date: " + d.Date + "<br/> Score: " + d.TotalQualityScore)
+                            .style("left", (d3.event.pageX-50) + "px")
                             .style("top", (d3.event.pageY-55) + "px");
                     }
                 )
@@ -362,11 +362,11 @@
 
             // Add chart title
             svg.append("text")
-                .attr("x", (width / 2) + 40)             
-                .attr("y", 20)
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .attr("x", 15 + (width / 2))             
+                .attr("y", -15)
                 .attr("text-anchor", "middle")  
-                .style("font-size", "20px") 
-                .style("text-decoration", "underline")  
+                .style("font-size", "28px") 
                 .text("Wellbore Data-Quality Score Overview");
 
             // Add legend
@@ -439,6 +439,7 @@
                 .on("click", function(d) {
                     clearChart();
                     qualityWellbore(d.Wellbore, d.Date);
+                    currentWellbore = d.Wellbore;
 
                     isOverview = true;
                     isWellbores = true;
@@ -466,7 +467,7 @@
                 .attr("text-anchor", "end")
                 .attr("x", (width / 2) + 80)
                 .attr("y", height + 40)
-                .text("Evaluation Date");
+                .text("Wellbore");
             // Y axis label
             svg.append("text")
                 .attr("text-anchor", "end")
@@ -499,89 +500,22 @@
                 .attr("d", path)
                 .attr("stroke", "orange");
 
-            // Add low quality threshold annotation
-            var annotations = [
-                {
-                    note: {
-                        label: "Low Quality Threshold Line",
-                        align: "middle",
-                        wrap: 100,
-                        padding: 5
-                    },
-                    connector: {
-                        end: "arrow",
-                        type: "line"
-                    },    
-                    type: d3.annotationCalloutCircle,
-                    subject: {
-                        radius: 10, 
-                        radiusPadding: 0
-                    },
-                    x: width-20,
-                    y: y(lowThreshold),
-                    dx: -10,
-                    dy: 40,
-                    color: ["red"]
-                }
-            ];
-
-            var makeAnnotations = d3.annotation().annotations(annotations);
-
-            svg
-                .append("g")
-                .attr("transform", "translate("+translateX+","+translateY+")")
-                .call(makeAnnotations);
-
-
-            // Add medium quality threshold annotation
-            annotations = [
-                {
-                    note: {
-                        label: "Medium Quality Threshold Line",
-                        align: "middle",
-                        wrap: 100,
-                        padding: 5
-                    },
-                    connector: {
-                        end: "arrow",
-                        type: "line"
-                    },
-                    type: d3.annotationCalloutCircle,
-                    subject: {
-                        radius: 10, 
-                        radiusPadding: 0
-                    },
-                    x: width-20,
-                    y: y(mediumThreshold),
-                    dx: -10,
-                    dy: 40,
-                    color: ["orange"]
-                }
-            ];
-
-            makeAnnotations = d3.annotation().annotations(annotations);
-
-            svg
-                .append("g")
-                .attr("transform", "translate("+translateX+","+translateY+")")
-                .call(makeAnnotations);
-
             // Add chart title
             svg.append("text")
-                .attr("x", (width / 2) + 40)             
-                .attr("y", 20)
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .attr("x", 15 + (width / 2))             
+                .attr("y", -15)
                 .attr("text-anchor", "middle")  
-                .style("font-size", "20px") 
-                .style("text-decoration", "underline")  
-                .text("Wellbore Data-Quality Score Weekly");
+                .style("font-size", "28px")  
+                .text("Wellbore Data-Quality Score on " + currentDate);
 
             // Add legend
             var svg = d3.select("#the_legend_svg");
 
             svg.append("text").attr("x",5).attr("y",20).text("Legend: ").style("font-size", "16px").style("text-decoration", "underline");
-            svg.append("circle").attr("cx",10).attr("cy",40).attr("r", 6).style("fill", "green");
-            svg.append("circle").attr("cx",10).attr("cy",60).attr("r", 6).style("fill", "orange");
-            svg.append("circle").attr("cx",10).attr("cy",80).attr("r", 6).style("fill", "red");
+            svg.append("rect").attr("x",4).attr("y",30).attr("width", 14).attr("height", 14).style("fill", "green").style("stroke", "black");;
+            svg.append("rect").attr("x",4).attr("y",50).attr("width", 14).attr("height", 14).style("fill", "orange").style("stroke", "black");;
+            svg.append("rect").attr("x",4).attr("y",70).attr("width", 14).attr("height", 14).style("fill", "red").style("stroke", "black");;
             svg.append("text").attr("x",20).attr("y",40).text("High Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
             svg.append("text").attr("x",20).attr("y",60).text("Medium Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
             svg.append("text").attr("x",20).attr("y",80).text("Low Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
@@ -673,7 +607,7 @@
                 .attr("text-anchor", "end")
                 .attr("x", (width / 2) + 80)
                 .attr("y", height + 40)
-                .text("Evaluation Date");
+                .text("Dimension");
             // Y axis label
             svg.append("text")
                 .attr("text-anchor", "end")
@@ -706,89 +640,22 @@
                 .attr("d", path)
                 .attr("stroke", "orange");
 
-            // Add low quality threshold annotation
-            var annotations = [
-                {
-                    note: {
-                        label: "Low Quality Threshold Line",
-                        align: "middle",
-                        wrap: 100,
-                        padding: 5
-                    },
-                    connector: {
-                        end: "arrow",
-                        type: "line"
-                    },    
-                    type: d3.annotationCalloutCircle,
-                    subject: {
-                        radius: 10, 
-                        radiusPadding: 0
-                    },
-                    x: width-20,
-                    y: y(lowThreshold),
-                    dx: -10,
-                    dy: 40,
-                    color: ["red"]
-                }
-            ];
-
-            var makeAnnotations = d3.annotation().annotations(annotations);
-
-            svg
-                .append("g")
-                .attr("transform", "translate("+translateX+","+translateY+")")
-                .call(makeAnnotations);
-
-
-            // Add medium quality threshold annotation
-            annotations = [
-                {
-                    note: {
-                        label: "Medium Quality Threshold Line",
-                        align: "middle",
-                        wrap: 100,
-                        padding: 5
-                    },
-                    connector: {
-                        end: "arrow",
-                        type: "line"
-                    },
-                    type: d3.annotationCalloutCircle,
-                    subject: {
-                        radius: 10, 
-                        radiusPadding: 0
-                    },
-                    x: width-20,
-                    y: y(mediumThreshold),
-                    dx: -10,
-                    dy: 40,
-                    color: ["orange"]
-                }
-            ];
-
-            makeAnnotations = d3.annotation().annotations(annotations);
-
-            svg
-                .append("g")
-                .attr("transform", "translate("+translateX+","+translateY+")")
-                .call(makeAnnotations);
-
             // Add chart title
             svg.append("text")
-                .attr("x", (width / 2) + 40)             
-                .attr("y", 20)
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .attr("x", 15 + (width / 2))             
+                .attr("y", -15)
                 .attr("text-anchor", "middle")  
-                .style("font-size", "20px") 
-                .style("text-decoration", "underline")  
-                .text("Wellbore Data-Quality Score Weekly");
+                .style("font-size", "28px") 
+                .text("Data-Quality Dimension Score of " + currentWellbore);
 
             // Add legend
             var svg = d3.select("#the_legend_svg");
 
             svg.append("text").attr("x",5).attr("y",20).text("Legend: ").style("font-size", "16px").style("text-decoration", "underline");
-            svg.append("circle").attr("cx",10).attr("cy",40).attr("r", 6).style("fill", "green");
-            svg.append("circle").attr("cx",10).attr("cy",60).attr("r", 6).style("fill", "orange");
-            svg.append("circle").attr("cx",10).attr("cy",80).attr("r", 6).style("fill", "red");
+            svg.append("rect").attr("x",4).attr("y",30).attr("width", 14).attr("height", 14).style("fill", "green").style("stroke", "black");
+            svg.append("rect").attr("x",4).attr("y",50).attr("width", 14).attr("height", 14).style("fill", "orange").style("stroke", "black");
+            svg.append("rect").attr("x",4).attr("y",70).attr("width", 14).attr("height", 14).style("fill", "red").style("stroke", "black");
             svg.append("text").attr("x",20).attr("y",40).text("High Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
             svg.append("text").attr("x",20).attr("y",60).text("Medium Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
             svg.append("text").attr("x",20).attr("y",80).text("Low Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
