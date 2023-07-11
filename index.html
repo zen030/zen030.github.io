@@ -224,8 +224,6 @@
                 .on('mouseout', 
                     () => {
                         div
-                            .transition()
-                            .duration(500)
                             .style('opacity', 0);
                     }
                 )
@@ -412,7 +410,7 @@
 
             const x = d3.scaleBand()
                     .domain(wellbores)
-                    .range([0,width]);
+                    .range([0,width]).padding(0.25);
             const y = d3.scaleLinear()
                     .domain([30,100])
                     .range([height,0]);
@@ -431,7 +429,7 @@
                         return tagColor[qualityTag(d.TotalQualityScore)];
                     }
                 )
-                .attr("x", function(d,i) {return x(d.Wellbore) + (bar_width/2);})
+                .attr("x", function(d,i) {return x(d.Wellbore);})
                 .attr("y", function(d,i) {return y(d.TotalQualityScore);})
                 .attr("width", bar_width)
                 .attr("height", function(d,i) {return height-y(d.TotalQualityScore);})
@@ -562,7 +560,7 @@
 
             const x = d3.scaleBand()
                     .domain(["Validity", "Completeness", "Consistency"])
-                    .range([0,width]);
+                    .range([0,width]).padding(0.5);
             const y = d3.scaleLinear()
                     .domain([0,100])
                     .range([height,0]);
@@ -581,7 +579,7 @@
                         return tagColor[qualityTag(d.score)];
                     }
                 )
-                .attr("x", function(d,i) {return x(d.dimension) + (bar_width/2);})
+                .attr("x", function(d,i) {return x(d.dimension);})
                 .attr("y", function(d,i) {return y(d.score);})
                 .attr("width", bar_width)
                 .attr("height", function(d,i) {return height-y(d.score);})
