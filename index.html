@@ -251,6 +251,36 @@
                 .attr("x", -height/2)
                 .text("Quality Score")
 
+            // Sample annotation for low-quality data point
+            var annotations = [
+                {
+                    note: {
+                        label: "Click any data point to drill-down",
+                        align: "middle",
+                        wrap: 100,
+                        padding: 5
+                    },
+                    connector: {
+                        end: "arrow",
+                        type: "line"
+                    },    
+
+                    x: x(parseDate("24-Jun-23")),
+                    y: y(45),
+                    dx: 10,
+                    dy: 25,
+                    color: ["blue"]
+                }
+            ];
+
+            var makeAnnotations = d3.annotation().annotations(annotations);
+
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .call(makeAnnotations);
+
+
             // Add low threshold
             var path = d3.path();
             path.moveTo(0, y(lowThreshold));
