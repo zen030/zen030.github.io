@@ -668,7 +668,7 @@
                 .attr("y", -15)
                 .attr("text-anchor", "middle")  
                 .style("font-size", "28px") 
-                .text("Dimension Scores of " + currentWellbore);
+                .text("Dimension Scores of " + currentWellbore + " on " + currentDate);
 
             // Add legend
             var svg = d3.select("#the_legend_svg");
@@ -725,9 +725,10 @@
 
     function dimensionText() {
         d3.select("#the_text").text(`
-            The next drilled-down chart is "Dimension Scores" barchart for the wellbore of interest. With this chart, the reader can review which dimension of data-quality
-            contributes to the quality of data (low, medium, or high). Using the navigation bar, reader can go back to the "Wellbore Data-Quality Score" barchart, and 
-            eventually go back to "Overview" line chart if required. Consistency is maintained, the data points and legend are color-coded based on the data-quality.
+            The next drilled-down chart is "Dimension Scores" barchart for the wellbore of interest on the chosen date. With this chart, the reader can review which 
+            dimension of data-quality contributes to the quality of data (low, medium, or high). Using the navigation bar, reader can go back to the 
+            "Wellbore Data-Quality Score" barchart, and eventually go back to "Overview" line chart if required. Consistency is maintained, the data points and 
+            legend are color-coded based on the data-quality.
         `);
     }
 </script>
