@@ -665,38 +665,34 @@
         d3.select("#the_text").text(`
             The narrative is about wellbore data quality. A wellbore refers to the hole or opening that is drilled or dug into the ground during the process of 
             constructing a well. It is a cylindrical pathway that allows access to underground resources such as oil, gas, water, or geothermal energy. 
-            The starting point of the drill-down narrative is the wellbore "Data-Quality Score Overview" chart between 03-Jun-2023 and 29-Jul-2023. 
-            The overview chart highlights low-quality data with red circle, medium-quality data with orange circle, and high-quality data with green circle.
-            Reader can quickly spots concerns regarding low quality data. Reader can drill down to "Wellbores" chart to review the concern by clicking the circle 
+            The starting point of the drill-down narrative is the wellbore "Data-Quality Score Overview" line chart between 03-Jun-2023 and 29-Jul-2023. 
+            The overview line chart highlights low-quality data with red circle, medium-quality data with orange circle, and high-quality data with green circle.
+            Reader can quickly spots concerns regarding low quality data. Reader can drill down to "Wellbores" barchart to review the concern by clicking the circle 
             data point. The chart displays the "Low Quality Threshold Line" and "Medium Quality Threshold Line". Anything below (or on) the "Low Quality Threshold Line"
             is considered low-quality data. Anything between "Low Quality Threshold Line" and "Medium Quality Threshold Line" are considered
-            medium-quality data. Anything above the "Medium Quality Threshold Line" are considered high-quality data.
+            medium-quality data. Anything above the "Medium Quality Threshold Line" are considered high-quality data. A tooltip on the data point (mouseover) is provided 
+            to retrieve detail information about the data point.
         `);
     }
 
     function wellboresText() {
         d3.select("#the_text").text(`
             The next drilled-down chart is "Wellbore Data-Quality Score" barchart. With this chart, the reader can review the data-quality record for each wellbore
-            on a chosen date (the date chosen from the Overview chart). Reader can quickly spots wellbore which contributes to the low-quality score (medium-quality 
+            on a chosen date (the date chosen from the "Overview" chart). Reader can quickly spots wellbore which contributes to the low-quality score (medium-quality 
             or high-quality depending on the reader's interest). The quality score is color-coded consistently across the charts (red for low, orange for medium, and 
             green for high). The legend is adjusted to show small rectangle instead of circle to reflect the chart types. Using the navigation bar on top of the page, 
             reader can quickly go back to the "Overview" chart. However, reader can't go forward using the navigation bar. The reader should drill down the chart in
-            order to go forward. Now let's drill down to the individual wellbore but clicking the bar of the wellbores on the barchart, this will lead the reader to 
+            order to go forward. Now let's drill down to the individual wellbore but clicking the bar of the wellbore on the barchart, this will lead the reader to 
             the "Dimension" chart.
         `);
     }
 
     function dimensionText() {
         d3.select("#the_text").text(`
-            The crisp autumn air embraced the countryside, as leaves of gold and red 
-            danced upon the gentle breeze. The scent of bonfires and apple orchards 
-            permeated the surroundings, invoking a sense of nostalgia. Harvesters toiled 
-            in the fields, their hard work rewarded by bountiful crops. The distant sound 
-            of laughter echoed from a nearby pumpkin patch, where families gathered to 
-            choose their perfect Halloween adornments. Sunflowers stood tall, their 
-            vibrant petals reaching for the sky. As daylight waned, a blanket of stars 
-            emerged, painting the night sky with twinkling constellations. It was a season 
-            of warmth, abundance, and enchantment.`);
+            The next drilled-down chart is "Dimension Scores" barchart for the wellbore of interest. With this chart, the reader can review which dimension of data-quality
+            contributes to the quality of data (low, medium, or high). Using the navigation bar, reader can go back to the "Wellbore Data-Quality Score" barchart, and 
+            eventually go back to "Overview" line chart if required. Consistency is maintained, the data points and legend are color-coded based on the data-quality.
+        `);
     }
 </script>
 </body>
