@@ -435,6 +435,36 @@
                 .attr('class', 'tooltip')
                 .style('opacity', 0);
 
+
+            // Annotation to indicate user to click barchart
+            var annotations = [
+                {
+                    note: {
+                        label: "Click any barchart to drill-down",
+                        align: "middle",
+                        wrap: 100,
+                        padding: 5
+                    },
+                    connector: {
+                        end: "arrow",
+                        type: "line"
+                    },    
+
+                    x: width-10,
+                    y: y(45),
+                    dx: 20,
+                    dy: 25,
+                    color: ["blue"]
+                }
+            ];
+
+            var makeAnnotations = d3.annotation().annotations(annotations);
+
+            svg
+                .append("g")
+                .attr("transform", "translate("+translateX+","+translateY+")")
+                .call(makeAnnotations);
+
             // Add the barchart   
             const bar_width = 100;
             svg
