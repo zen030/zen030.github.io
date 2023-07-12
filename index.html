@@ -1,4 +1,8 @@
 <html>
+<head>
+<link rel="icon" type="image/x-icon" href="https://zen030.github.io/favicon.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="https://zen030.github.io/favicon.ico" />
+
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 
@@ -71,6 +75,7 @@
         cursor: pointer;
     }
 </style>
+</head>
 <body onload="init()">
 <br>
 <div align="center">
@@ -659,15 +664,42 @@
     }
 
     function overviewText() {
-        d3.select("#the_text").text("The sun slowly set over the tranquil lake, casting a warm orange glow across the water. A gentle breeze rustled through the trees, creating a soothing melody. Birds chirped in the distance, their songs blending with the sounds of nature. As the evening descended, the air grew cooler, and a blanket of stars emerged in the darkening sky. The stillness of the moment was interrupted by the distant howl of a lone wolf, adding a touch of wildness to the serene scene. It was a moment of perfect harmony between the beauty of nature and the peace within.");
+        d3.select("#the_text").text(`
+            The sun slowly set over the tranquil lake, casting a warm orange glow across 
+            the water. A gentle breeze rustled through the trees, creating a soothing melody. 
+            Birds chirped in the distance, their songs blending with the sounds of nature. 
+            As the evening descended, the air grew cooler, and a blanket of stars emerged in 
+            the darkening sky. The stillness of the moment was interrupted by the distant 
+            howl of a lone wolf, adding a touch of wildness to the serene scene. 
+            It was a moment of perfect harmony between the beauty of nature and the peace 
+            within.
+        `);
     }
 
     function wellboresText() {
-        d3.select("#the_text").text("The bustling city streets were alive with a vibrant energy as people hurriedly went about their day. Tall skyscrapers reached towards the heavens, their glass facades reflecting the sunlight. Honking horns and the occasional siren added to the symphony of urban sounds. Sidewalk cafes overflowed with laughter and conversations, while the aroma of freshly brewed coffee wafted through the air. Amidst the chaos, street artists painted colorful masterpieces on the walls, adding splashes of creativity to the concrete jungle. It was a constant dance of movement and diversity, where dreams intertwined with the pulse of the metropolis.");
+        d3.select("#the_text").text(`
+            The bustling city streets were alive with a vibrant energy as people hurriedly 
+            went about their day. Tall skyscrapers reached towards the heavens, their glass 
+            facades reflecting the sunlight. Honking horns and the occasional siren added to 
+            the symphony of urban sounds. Sidewalk cafes overflowed with laughter and 
+            conversations, while the aroma of freshly brewed coffee wafted through the air. 
+            Amidst the chaos, street artists painted colorful masterpieces on the walls, 
+            adding splashes of creativity to the concrete jungle. It was a constant dance 
+            of movement and diversity, where dreams intertwined with the pulse of the 
+            metropolis.`);
     }
 
     function dimensionText() {
-        d3.select("#the_text").text("The crisp autumn air embraced the countryside, as leaves of gold and red danced upon the gentle breeze. The scent of bonfires and apple orchards permeated the surroundings, invoking a sense of nostalgia. Harvesters toiled in the fields, their hard work rewarded by bountiful crops. The distant sound of laughter echoed from a nearby pumpkin patch, where families gathered to choose their perfect Halloween adornments. Sunflowers stood tall, their vibrant petals reaching for the sky. As daylight waned, a blanket of stars emerged, painting the night sky with twinkling constellations. It was a season of warmth, abundance, and enchantment.");
+        d3.select("#the_text").text(`
+            The crisp autumn air embraced the countryside, as leaves of gold and red 
+            danced upon the gentle breeze. The scent of bonfires and apple orchards 
+            permeated the surroundings, invoking a sense of nostalgia. Harvesters toiled 
+            in the fields, their hard work rewarded by bountiful crops. The distant sound 
+            of laughter echoed from a nearby pumpkin patch, where families gathered to 
+            choose their perfect Halloween adornments. Sunflowers stood tall, their 
+            vibrant petals reaching for the sky. As daylight waned, a blanket of stars 
+            emerged, painting the night sky with twinkling constellations. It was a season 
+            of warmth, abundance, and enchantment.`);
     }
 </script>
 </body>
