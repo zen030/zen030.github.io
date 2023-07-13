@@ -91,6 +91,17 @@
     </li>
 </ul>
 </div>
+<br>
+<div align="center">
+    <label for="start">Start date</label>
+    <input type="date" 
+           value="2023-06-01"
+           min="2023-06-01" max="2023-06-30" id="inputStartDate"/>
+    <label for="end">End date</label>
+    <input type="date" name="end_date"
+           value="2023-07-31"
+           min="2023-07-01" max="2023-07-31" id="inputEndDate"/>
+</div>
 
 <div id="tooltip_div"></div>    
 <p>
@@ -130,10 +141,19 @@
     }
 
     function qualityOverview () {
+        d3.select("#inputStartDate").property("disabled", false);
+        d3.select("#inputEndDate").property("disabled", false);
+
         d3.csv("overview_quality.csv")
         .then(function(data) {
             overviewText();
-            
+
+            var startDate = d3.select("#inputStartDate").property("value");
+            var endData = d3.select("#inputEndDate").property("value");
+
+            startDate = data[0].Date;
+            endDate = data[data.length-1].Date;
+
             isOverview = true;
             isWellbores = false;
             isDimensions = false;
@@ -260,15 +280,10 @@
                         wrap: 100,
                         padding: 5
                     },
-                    connector: {
-                        end: "arrow",
-                        type: "line"
-                    },    
-
-                    x: x(parseDate("24-Jun-23")),
-                    y: y(45),
-                    dx: 10,
-                    dy: 25,
+                    x: x(parseDate(startDate))+100,
+                    y: y(95),
+                    dx: 0,
+                    dy: 0,
                     color: ["blue"]
                 }
             ];
@@ -398,8 +413,12 @@
     }
 
     function qualityWeekly (Date) {
+        d3.select("#inputStartDate").property("disabled", true);
+        d3.select("#inputEndDate").property("disabled", true);
+
         d3.csv("wellbore_quality.csv")
         .then(function(data) {
+
             wellboresText ();
 
             d3.select("#OverviewMenu").attr("class", "active");
@@ -589,8 +608,12 @@
     }    
 
     function qualityWellbore (Wellbore, Date) {
+        d3.select("#inputStartDate").property("disabled", true);
+        d3.select("#inputEndDate").property("disabled", true);
+
         d3.csv("wellbore_quality.csv")
         .then(function(data) {
+
             dimensionText();
 
             d3.select("#OverviewMenu").attr("class", "active");
