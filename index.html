@@ -797,36 +797,19 @@
 
     function overviewText() {
         d3.select("#the_text").text(`
-            The narrative is about wellbore data quality. A wellbore refers to the hole or opening that is drilled into the ground during the process of 
-            constructing a well that allows access to underground resources such as oil, gas, water, or geothermal energy. The starting point of the drill-down 
-            narrative is the wellbore "Data-Quality Score Overview" line chart between 03-Jun-2023 and 29-Jul-2023. The parameters of the overview chart are the start and end date.
-            The overview line chart highlights low-quality data with red circle, medium-quality data with orange circle, and high-quality data with green circle.
-            Reader can quickly spots concerns regarding low quality data. Reader can drill down to "Wellbores" barchart to review the concern by clicking the circle 
-            data point. The chart displays the "Low Quality Threshold Line" and "Medium Quality Threshold Line". Anything below (or on) the "Low Quality Threshold Line"
-            is considered low-quality data. Anything between "Low Quality Threshold Line" and "Medium Quality Threshold Line" are considered
-            medium-quality data. Anything above the "Medium Quality Threshold Line" are considered high-quality data. A tooltip on the data point (mouseover) is provided 
-            to retrieve detail information about the data point.
+        The narrative revolves around wellbore data quality. A wellbore refers to the hole or opening that is drilled into the ground during the process of constructing a well, providing access to underground resources such as oil, gas, water, or geothermal energy. The starting point of the drill-down narrative is the "Data-Quality Score Overview" line chart, spanning from 03-Jun-2023 to 29-Jul-2023. The parameters of the overview chart are the start and end dates. The line chart distinguishes low-quality data with a red circle, medium-quality data with an orange circle, and high-quality data with a green circle. Readers can quickly identify concerns related to low-quality data. By clicking on a circle data point, readers can drill down to the "Wellbores" bar chart to review the specific concern. This chart displays the "Low Quality Threshold Line" and the "Medium Quality Threshold Line." Data falling below (or on) the "Low Quality Threshold Line" is considered low-quality, while data falling between the "Low Quality Threshold Line" and the "Medium Quality Threshold Line" is considered medium-quality. Data above the "Medium Quality Threshold Line" is considered high-quality. A tooltip is provided when hovering over a data point, offering detailed information about that specific point.
         `);
     }
 
     function wellboresText() {
         d3.select("#the_text").text(`
-            The next drilled-down chart is "Wellbore Data-Quality Score" barchart. With this chart, the reader can review the data-quality record for each wellbore
-            on a chosen date (the date chosen from the "Overview" chart). Reader can quickly spots wellbore which contributes to the low-quality score (medium-quality 
-            or high-quality depending on the reader's interest). The quality score is color-coded consistently across the charts (red for low, orange for medium, and 
-            green for high). The legend is adjusted to show small rectangle instead of circle to reflect the chart types. Using the navigation bar on top of the page, 
-            reader can quickly go back to the "Overview" chart. However, reader can't go forward using the navigation bar. The reader should drill down the chart in
-            order to go forward. Now let's drill down to the individual wellbore by clicking the bar of the wellbore on the barchart, this will lead the reader to 
-            the "Dimension" chart.
+        The next drilled-down chart is the "Wellbore Data-Quality Score" bar chart. With this chart, readers can review the data-quality records for each wellbore on a chosen date (selected from the "Overview" chart). Readers can quickly spot wellbores that contribute to a low-quality score (or medium-quality and high-quality scores, depending on the reader's interest). The quality score is consistently color-coded across the charts: red for low, orange for medium, and green for high. The legend has been adjusted to display small rectangles instead of circles to reflect the chart types. Using the navigation bar at the top of the page, readers can quickly return to the "Overview" chart. However, it is not possible to move forward using the navigation bar; readers need to drill down into the chart to proceed. Now, let's drill down to the individual wellbore by clicking on the corresponding bar in the bar chart. This will lead the reader to the "Dimension" chart.
         `);
     }
 
     function dimensionText() {
         d3.select("#the_text").text(`
-            The next drilled-down chart is "Dimension Scores" barchart for the wellbore of interest on the chosen date. With this chart, the reader can review which 
-            dimension of data-quality contributes to the quality of data (low, medium, or high). Using the navigation bar, reader can go back to the 
-            "Wellbore Data-Quality Score" barchart, and eventually go back to "Overview" line chart if required. Consistency is maintained, the data points and 
-            legend are color-coded based on the data-quality.
+        The next drilled-down chart is the "Dimension Scores" bar chart for the wellbore of interest on the chosen date. With this chart, readers can review which dimension of data quality contributes to the overall data quality (low, medium, or high). The validity dimension refers to data quality checks based on logical operators, such as ensuring that the start date is before the end date. The completeness dimension refers to the completeness of data attributes, such as whether the wellbore name or surface location exists. The consistency dimension refers to the consistency of the data, for example, ensuring that an oil-producing wellbore does not have an abandoned date. Readers can navigate back to the "Wellbore Data-Quality Score" bar chart and eventually return to the "Overview" line chart if necessary. Consistency is maintained throughout the visualization, with data points and the legend color-coded based on data quality.
         `);
     }
 </script>
