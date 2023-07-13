@@ -77,7 +77,6 @@
 </style>
 </head>
 <body onload="init()">
-<br>
 <div align="center">
 <ul>
     <li id="OverviewMenu" >
@@ -106,7 +105,7 @@
 <div id="tooltip_div"></div>    
 <p>
     <svg id="the_chart_svg" width="800" height="500" style="display: block;margin: auto"></svg>
-    <svg id="the_legend_svg" width="800" height="100" style="display: block;margin: auto"></svg>
+    <svg id="the_legend_svg" width="800" height="80" style="display: block;margin: auto"></svg>
 </p>
 <p id="the_text"></p>
 <script>
@@ -399,13 +398,13 @@
             // Add legend
             var svg = d3.select("#the_legend_svg");
 
-            svg.append("text").attr("x",5).attr("y",20).text("Legend: ").style("font-size", "16px").style("text-decoration", "underline");
-            svg.append("circle").attr("cx",10).attr("cy",40).attr("r", 6).style("fill", "green");
-            svg.append("circle").attr("cx",10).attr("cy",60).attr("r", 6).style("fill", "orange");
-            svg.append("circle").attr("cx",10).attr("cy",80).attr("r", 6).style("fill", "red");
-            svg.append("text").attr("x",20).attr("y",40).text("High Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
-            svg.append("text").attr("x",20).attr("y",60).text("Medium Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
-            svg.append("text").attr("x",20).attr("y",80).text("Low Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",5).attr("y",10).text("Legend: ").style("font-size", "15px").style("text-decoration", "underline");
+            svg.append("circle").attr("cx",10).attr("cy",30).attr("r", 6).style("fill", "green");
+            svg.append("circle").attr("cx",10).attr("cy",50).attr("r", 6).style("fill", "orange");
+            svg.append("circle").attr("cx",10).attr("cy",70).attr("r", 6).style("fill", "red");
+            svg.append("text").attr("x",20).attr("y",32).text("High Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",20).attr("y",52).text("Medium Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",20).attr("y",72).text("Low Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
         })
         .catch(function(error){
             // handle error
@@ -594,13 +593,13 @@
             // Add legend
             var svg = d3.select("#the_legend_svg");
 
-            svg.append("text").attr("x",5).attr("y",20).text("Legend: ").style("font-size", "16px").style("text-decoration", "underline");
-            svg.append("rect").attr("x",4).attr("y",30).attr("width", 14).attr("height", 14).style("fill", "green").style("stroke", "black");;
-            svg.append("rect").attr("x",4).attr("y",50).attr("width", 14).attr("height", 14).style("fill", "orange").style("stroke", "black");;
-            svg.append("rect").attr("x",4).attr("y",70).attr("width", 14).attr("height", 14).style("fill", "red").style("stroke", "black");;
-            svg.append("text").attr("x",20).attr("y",40).text("High Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
-            svg.append("text").attr("x",20).attr("y",60).text("Medium Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
-            svg.append("text").attr("x",20).attr("y",80).text("Low Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",5).attr("y",10).text("Legend: ").style("font-size", "15px").style("text-decoration", "underline");
+            svg.append("rect").attr("x",4).attr("y",20).attr("width", 14).attr("height", 14).style("fill", "green").style("stroke", "black");;
+            svg.append("rect").attr("x",4).attr("y",40).attr("width", 14).attr("height", 14).style("fill", "orange").style("stroke", "black");;
+            svg.append("rect").attr("x",4).attr("y",60).attr("width", 14).attr("height", 14).style("fill", "red").style("stroke", "black");;
+            svg.append("text").attr("x",20).attr("y",30).text("High Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",20).attr("y",50).text("Medium Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",20).attr("y",70).text("Low Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
         })
         .catch(function(error){
             // handle error
@@ -756,13 +755,13 @@
             // Add legend
             var svg = d3.select("#the_legend_svg");
 
-            svg.append("text").attr("x",5).attr("y",20).text("Legend: ").style("font-size", "16px").style("text-decoration", "underline");
-            svg.append("rect").attr("x",4).attr("y",30).attr("width", 14).attr("height", 14).style("fill", "green").style("stroke", "black");
-            svg.append("rect").attr("x",4).attr("y",50).attr("width", 14).attr("height", 14).style("fill", "orange").style("stroke", "black");
-            svg.append("rect").attr("x",4).attr("y",70).attr("width", 14).attr("height", 14).style("fill", "red").style("stroke", "black");
-            svg.append("text").attr("x",20).attr("y",40).text("High Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
-            svg.append("text").attr("x",20).attr("y",60).text("Medium Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
-            svg.append("text").attr("x",20).attr("y",80).text("Low Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",5).attr("y",10).text("Legend: ").style("font-size", "15px").style("text-decoration", "underline");
+            svg.append("rect").attr("x",4).attr("y",20).attr("width", 14).attr("height", 14).style("fill", "green").style("stroke", "black");
+            svg.append("rect").attr("x",4).attr("y",40).attr("width", 14).attr("height", 14).style("fill", "orange").style("stroke", "black");
+            svg.append("rect").attr("x",4).attr("y",60).attr("width", 14).attr("height", 14).style("fill", "red").style("stroke", "black");
+            svg.append("text").attr("x",20).attr("y",30).text("High Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",20).attr("y",50).text("Medium Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
+            svg.append("text").attr("x",20).attr("y",70).text("Low Quality Data").style("font-size", "14px").attr("alignment-baseline","middle");
         })
         .catch(function(error){
             // handle error
@@ -784,7 +783,7 @@
         d3.select("#the_text").text(`
             The narrative is about wellbore data quality. A wellbore refers to the hole or opening that is drilled or dug into the ground during the process of 
             constructing a well. It is a cylindrical pathway that allows access to underground resources such as oil, gas, water, or geothermal energy. 
-            The starting point of the drill-down narrative is the wellbore "Data-Quality Score Overview" line chart between 03-Jun-2023 and 29-Jul-2023. 
+            The starting point of the drill-down narrative is the wellbore "Data-Quality Score Overview" line chart between 03-Jun-2023 and 29-Jul-2023.
             The overview line chart highlights low-quality data with red circle, medium-quality data with orange circle, and high-quality data with green circle.
             Reader can quickly spots concerns regarding low quality data. Reader can drill down to "Wellbores" barchart to review the concern by clicking the circle 
             data point. The chart displays the "Low Quality Threshold Line" and "Medium Quality Threshold Line". Anything below (or on) the "Low Quality Threshold Line"
