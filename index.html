@@ -95,11 +95,11 @@
     <label for="start">Start date</label>
     <input type="date" 
            value="2023-06-01"
-           min="2023-06-01" max="2023-06-30" id="inputStartDate"/>
+           min="2023-06-01" max="2023-06-30" id="inputStartDate" onchange="clearChart();qualityOverview();"/>
     <label for="end">End date</label>
     <input type="date" name="end_date"
            value="2023-07-31"
-           min="2023-07-01" max="2023-07-31" id="inputEndDate"/>
+           min="2023-07-01" max="2023-07-31" id="inputEndDate" onchange="clearChart();qualityOverview();"/>
 </div>
 
 <div id="tooltip_div"></div>    
@@ -145,10 +145,28 @@
 
         d3.csv("overview_quality.csv")
         .then(function(data) {
+            const parseDate = d3.timeParse("%d-%b-%y");
             overviewText();
 
-            var startDate = d3.select("#inputStartDate").property("value");
-            var endData = d3.select("#inputEndDate").property("value");
+            const parseInputDate = d3.timeParse("%Y-%m-%d");
+            var startDate = parseInputDate(d3.select("#inputStartDate").property("value"));
+            var endDate = parseInputDate(d3.select("#inputEndDate").property("value"));
+
+            console.log("Start Date: " + startDate);
+            console.log("End Date: " + endDate);
+
+            let i = 0;
+            var temp_data = [];
+            while (i < data.length) {
+                temp_date = parseDate(data[i].Date);
+                if ((temp_date >= startDate) && (temp_date <= endDate)) {
+                    console.log(temp_date);
+                    temp_data.push(data[i]);
+                }                
+                i++;
+            }
+
+            data = temp_data;
 
             startDate = data[0].Date;
             endDate = data[data.length-1].Date;
@@ -170,8 +188,6 @@
             height = svg.attr("height") - (2 * translateY);
 
             // x value
-            const parseDate = d3.timeParse("%d-%b-%y");
-
             const x = d3.scaleTime()
                     .domain(d3.extent(data, (date) => parseDate(date.Date)))
                     .range([0,width]);
